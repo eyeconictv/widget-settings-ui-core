@@ -20,14 +20,17 @@ angular.module('risevision.widget.common')
       var additionalParamsStr =
         settingsParser.encodeAdditionalParams(settings.additionalParams);
 
-      gadgetsApi.rpc.call('', 'rscmd_saveSettings', null, {
+      gadgetsApi.rpc.call('', 'rscmd_saveSettings', function (result) {
+        $log.debug('encoded settings', JSON.stringify(result));
+        $log.debug('Settings saved. ', settings);
+
+        deferred.resolve(result);
+      }, {
         params: str,
         additionalParams: additionalParamsStr
       });
 
-      $log.debug('Settings saved. ', settings);
 
-      deferred.resolve();
 
       return deferred.promise;
     };
@@ -67,14 +70,28 @@ angular.module('risevision.widget.common')
       return JSON.stringify(additionalParams);
     };
 
-    this.parseParams = function (paramsStr) {
-      //TODO
-      return {};
+    this.encodeParams = function (params) {
+      var str = [];
+      for(var p in params) {
+        if (params.hasOwnProperty(p)) {
+          str.push(encodeURIComponent(p) + '=' + encodeURIComponent(params[p]));
+        }
+      }
+      return '?' + str.join('&');
     };
 
-    this.encodeParams = function (parmas) {
-      //TODO
-      return "";
+    this.parseParams = function (paramsStr) {
+      //get rid of preceeding '?'
+      if(paramsStr[0] === '?') {
+        paramsStr = paramsStr.slice(1);
+      }
+      var result = {};
+      var vars = paramsStr.split('&');
+      for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        result[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+      }
+      return result;
     };
 
   }]);
