@@ -68,7 +68,7 @@ angular.module('risevision.widget.common', [])
     //return new RiseVision.Common.Settings();
   }]);
 angular.module('risevision.widget.common')
-  .factory('gadgetsApi', ["$window", function ($window) {
+  .factory('gadgetsApi', ['$window', function ($window) {
     return $window.gadgets;
   }]);
 

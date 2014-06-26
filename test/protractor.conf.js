@@ -2,11 +2,11 @@ exports.config = {
   allScriptsTimeout: 11000,
 
   // specs: [
-  //   "e2e/*.js"
+  //   'e2e/*.js'
   // ],
 
   // capabilities: {
-  //   "browserName": "phantomjs"
+  //   'browserName': 'phantomjs'
   // },
 
   // -----------------------------------------------------------------
@@ -14,15 +14,15 @@ exports.config = {
   // -----------------------------------------------------------------
 
   capabilities: {
-    browserName: "phantomjs",
-    version: "",
-    platform: "ANY"
+    browserName: 'phantomjs',
+    version: '',
+    platform: 'ANY'
   },
 
-  framework: "mocha",
+  framework: 'mocha',
 
   mochaOpts: {
-    reporter: "spec",
+    reporter: 'spec',
     slow: 3000
   }
 };

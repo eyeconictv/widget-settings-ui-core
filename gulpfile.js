@@ -12,6 +12,7 @@
   var bump = require('gulp-bump');
   var watch = require('gulp-watch');
   var path = require('path');
+  var jshint = require('gulp-jshint');
   var protractor = require('gulp-protractor').protractor;
   var webdriver_update = require('gulp-protractor').webdriver_update;
   var httpServer;
@@ -26,6 +27,10 @@
       'src/js/**/**/*.js',
       'test/unit/fixtures/*.js',
       'test/unit/**/*spec.js'
+    ];
+  var appJSFiles = [
+      'src/js/**/*.js',
+      'test/**/*.js'
     ];
 
   gulp.task('config', function() {
@@ -84,6 +89,15 @@
 
   gulp.task('webdriver_update', webdriver_update);
 
+  gulp.task('lint', function() {
+    return gulp.src(appJSFiles)
+      .pipe(jshint())
+      .pipe(jshint.reporter('jshint-stylish'))
+      .pipe(jshint.reporter('fail'))
+      .on('error', function(err) {
+        throw err;
+      });
+  });
   gulp.task('e2e:test', ['webdriver_update', 'e2e:server'], function () {
     return gulp.src(['./test/e2e/*-scenarios.js'])
       .pipe(protractor({
@@ -105,7 +119,7 @@
     .pipe(gulp.dest('./dist/'));
   });
 
-  gulp.task('build', ['concat']);
+  gulp.task('build', ['lint', 'concat']);
 
   gulp.task('test', ['unit:test', 'e2e:test']);
 
