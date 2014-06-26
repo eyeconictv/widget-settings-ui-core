@@ -6,7 +6,6 @@
 
   var chai = require('chai');
   var chaiAsPromised = require('chai-as-promised');
-  // var fs = require('fs');
 
   chai.use(chaiAsPromised);
   var expect = chai.expect;
@@ -18,19 +17,24 @@
     });
 
     it('Should correctly load settings', function () {
+      element(by.id('loadSettings')).click();
       expect(element(by.id('textSettingInParams')).getAttribute('value')).to.eventually.equal('abc');
       expect(element(by.id('textSetting')).getAttribute('value')).to.eventually.equal('hello world');
       expect(element(by.id('checkboxSetting')).getAttribute('checked')).to.eventually.equal('true');
-
-      // browser.takeScreenshot().then(function(png) {
-      //   var stream = fs.createWriteStream("/tmp/screenshot.png");
-      //     stream.write(new Buffer(png, "base64"));
-      //     stream.end();
-      //   });
+      expect(element(by.id('textAreaSetting')).getText()).to.eventually.equal('the quick brown fox jumps over the lazy dog');
     });
 
-    xit('Should correctly save settings', function () {
-      //TODO
+    it('Should correctly save settings', function (done) {
+      element(by.id('textSettingInParams')).clear().sendKeys('defg');
+      element(by.id('textSetting')).clear().sendKeys('bye world');
+      element(by.id('checkboxSetting')).click();
+      element(by.id('textAreaSetting')).clear().sendKeys('There is nothing either good or bad but thinking makes it so.');
+      element(by.id('saveSettings')).click();
+      expect(browser.executeScript('return window.result')).to.eventually.deep.equal(
+        {
+          'additionalParams': '{"textSetting":"bye world","checkboxSetting":false,"textAreaSetting":"the quick brown fox jumps over the lazy dog"}',
+          'params': '?up_id=hello&textSetting1=defg'
+        });
     });
   });
 })();

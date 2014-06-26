@@ -1,6 +1,11 @@
 window.result = {
-  additionalParams: '{"textSetting":"hello world","checkboxSetting":true}'
-};
+  additionalParams: JSON.stringify(
+    {
+      'textSetting':'hello world',
+      'checkboxSetting':true,
+      'textAreaSetting': 'the quick brown fox jumps over the lazy dog'
+    }
+  )};
 
 window.gadgets = {
   rpc: function (methodName, callback, params) {
