@@ -1,6 +1,6 @@
 {
-  "name": "rv-widget-settings-ui-core",
-  "version": "0.1.3",
+  "name": "widget-settings-ui-core",
+  "version": "0.1.4",
   "description": "Common components shared across Rise Vision widget settings UI",
   "main": "gulpfile.js",
   "directories": {
