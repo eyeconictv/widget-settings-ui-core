@@ -18,7 +18,7 @@ describe('Settings UI', function() {
     //stub services
     $provide.service('$q', function() {return Q;});
     $provide.value('$window', {
-      locaiton: {
+      location: {
         search: '?up_id=abc'
       }
     });
