@@ -1,6 +1,6 @@
 {
-  "name": "rv-widget-settings-ui-core",
-  "version": "0.1.3",
+  "name": "widget-settings-ui-core",
+  "version": "0.1.4",
   "homepage": "https://github.com/Rise-Vision/widget-settings-ui-core",
   "authors": [
     "Xiyang Chen <settinghead@gmail.com>"
