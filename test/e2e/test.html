@@ -1,0 +1,45 @@
+<html>
+<head></head>
+<body ng-app="test-app" ng-controller="settingsController">
+
+<section>
+  <labal for="textSettingInParams">textSetting in params</label>
+  <input id="textSettingInParams" ng-model="settings.params.textSetting1" />
+</section>
+
+<section>
+  <labal for="textSetting">textSetting</label>
+  <input id="textSetting" ng-model="settings.additionalParams.textSetting" />
+</section>
+
+<section>
+  <labal for="checkboxSetting">checkboxSetting</label>
+  <input type="checkbox" id="checkboxSetting" ng-model="settings.additionalParams.checkboxSetting" />
+</section>
+
+<section>
+  <labal for="textAreaSetting">textAreaSetting</label>
+  <br />
+  <textarea id="textAreaSetting">{{settings.additionalParams.textAreaSetting}}</textarea>
+</section>
+
+<input type="button" id="loadSettings" value="load" ng-click="loadAdditionalParams()" />
+<input type="button" id="saveSettings" value="save" ng-click="saveSettings()" />
+
+<script type="text/javascript" src="../../components/angular/angular.js"></script>
+<script type="text/javascript" src="./gadgets-api-mock.js"></script>
+<script type="text/javascript" src="../../src/js/config/config.js"></script>
+<script type="text/javascript" src="../../components/sinon/lib/sinon.js"></script>
+<script type="text/javascript" src="../../components/sinon/lib/sinon/spy.js"></script>
+<script type="text/javascript" src="../../components/sinon/lib/sinon/mock.js"></script>
+<script type="text/javascript" src="../../src/js/_settings.js"></script>
+<script type="text/javascript" src="../../src/js/svc-common-settings.js"></script>
+<script type="text/javascript" src="../../src/js/svc-gadgets-api.js"></script>
+<script type="text/javascript" src="../../src/js/svc-i18n-legacy.js"></script>
+<script type="text/javascript" src="../../src/js/svc-settings.js"></script>
+<script type="text/javascript" src="../../src/js/ctr-settings.js"></script>
+<script type="text/javascript">
+  angular.module('test-app', ['risevision.widget.common']);
+</script>
+</body>
+</html>
