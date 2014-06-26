@@ -18,6 +18,12 @@ angular.module('risevision.widget.common')
       }
     };
 
+    $scope.setAdditionalParam = function (name, val) {
+      $scope.settings.additionalParams[name] = val;
+    };
+
+
+
     $scope.loadAdditionalParams = function () {
       settingsGetter.getAdditionalParams().then(function (additionalParams) {
         $scope.settings.additionalParams = additionalParams;
