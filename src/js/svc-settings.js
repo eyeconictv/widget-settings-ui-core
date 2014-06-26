@@ -4,7 +4,6 @@ angular.module('risevision.widget.common')
 
     this.saveSettings = function (settings, validator) {
       var deferred = $q.defer();
-
       var alerts = [];
 
       if (validator) {
@@ -30,30 +29,33 @@ angular.module('risevision.widget.common')
         additionalParams: additionalParamsStr
       });
 
-
-
       return deferred.promise;
     };
 
   }])
 
-  .service('settingsGetter', ['$q', 'gadgetsApi', '$log', 'settingsParser', function ($q, gadgetsApi, $log, settingsParser) {
-    this.getAdditionalParams = function () {
-      var deferred = $q.defer();
+  .service('settingsGetter', ['$q', 'gadgetsApi', '$log', 'settingsParser', '$window',
+    function ($q, gadgetsApi, $log, settingsParser, $window) {
+      this.getAdditionalParams = function () {
+        var deferred = $q.defer();
 
-      gadgetsApi.rpc.call('', 'rscmd_getAdditionalParams', function (result) {
-        if(result) {
-          result = settingsParser.parseAdditionalParams(result);
-        }
-        else {
-          result = {};
-        }
-        $log.debug('getAdditionalParams returns ', result);
-        deferred.resolve(result);
-      });
+        gadgetsApi.rpc.call('', 'rscmd_getAdditionalParams', function (result) {
+          if(result) {
+            result = settingsParser.parseAdditionalParams(result);
+          }
+          else {
+            result = {};
+          }
+          $log.debug('getAdditionalParams returns ', result);
+          deferred.resolve(result);
+        });
 
-      return deferred.promise;
-    };
+        return deferred.promise;
+      };
+
+      this.getParams = function () {
+        return settingsParser.parseParams($window.location.search);
+      };
   }])
 
   .service('settingsParser', [function () {

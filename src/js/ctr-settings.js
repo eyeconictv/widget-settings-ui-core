@@ -1,11 +1,11 @@
 angular.module('risevision.widget.common')
-  .controller('settingsController', ['$scope', 'settingsSaver', 'settingsGetter', '$timeout',
-    function ($scope, settingsSaver, settingsGetter, $timeout) {
+  .controller('settingsController', ['$scope', 'settingsSaver', 'settingsGetter',
+    function ($scope, settingsSaver, settingsGetter) {
 
-    $scope.settings = { params: {up_layout: 'current'}, additionalParams: {}};
+    $scope.settings = { params: {}, additionalParams: {}};
     $scope.alerts = [];
 
-    $scope.getAdditionalParams = function (name, defaultVal) {
+    $scope.getAdditionalParam = function (name, defaultVal) {
       var val = $scope.settings.additionalParams[name];
       if(angular.isUndefined(val)) {
         return defaultVal;
@@ -13,6 +13,13 @@ angular.module('risevision.widget.common')
       else {
         return val;
       }
+    };
+
+    $scope.loadAdditionalParams = function () {
+      settingsGetter.getAdditionalParams().then(function (additionalParams) {
+        $scope.settings.additionalParams = additionalParams;
+      },
+      function (err) {alert (err); });
     };
 
     $scope.setAdditionalParams = function (name, val) {
@@ -25,19 +32,17 @@ angular.module('risevision.widget.common')
 
       $scope.$emit('collectAdditionalParams');
 
-      $timeout (function () {
-        settingsSaver.saveSettings($scope.settings).then(function () {
-          //TODO: perhaps show some indicator in UI?
-        }, function (err) {
-          $scope.alerts = err.alerts;
-        });
-      }, 0);
+      settingsSaver.saveSettings($scope.settings).then(function () {
+        //TODO: perhaps show some indicator in UI?
+      }, function (err) {
+        $scope.alerts = err.alerts;
+      });
 
     };
 
-    settingsGetter.getAdditionalParams().then(function (additionalParams) {
-      $scope.settings.additionalParams = additionalParams;
-    });
+    $scope.settings.params = settingsGetter.getParams();
+    $scope.loadAdditionalParams();
+
   }])
 
   .directive('scrollOnAlerts', function() {

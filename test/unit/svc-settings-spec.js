@@ -17,6 +17,11 @@ describe('Settings UI', function() {
     beforeEach(module(function ($provide) {
     //stub services
     $provide.service('$q', function() {return Q;});
+    $provide.value('$window', {
+      locaiton: {
+        search: '?up_id=abc'
+      }
+    });
 
     $provide.value('gadgetsApi', {
       rpc: function (methodName, callback, params) {

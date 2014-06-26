@@ -85,10 +85,10 @@
   gulp.task('webdriver_update', webdriver_update);
 
   gulp.task('e2e:test', ['webdriver_update', 'e2e:server'], function () {
-    return gulp.src(['./test/e2e/*.js'])
+    return gulp.src(['./test/e2e/*-scenarios.js'])
       .pipe(protractor({
           configFile: './test/protractor.conf.js',
-          args: ['--baseUrl', 'http://127.0.0.1:8098/test/e2e/test-ng.html']
+          args: ['--baseUrl', 'http://127.0.0.1:8098/test/e2e/test.html']
       }))
       .on('error', function (e) {
         console.log('Error:', e); throw e;
