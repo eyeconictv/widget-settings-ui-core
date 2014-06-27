@@ -52,6 +52,7 @@ angular.module('risevision.widget.common')
     $scope.settings.params = settingsGetter.getParams();
     $scope.loadAdditionalParams();
 
+
   }])
 
   .directive('scrollOnAlerts', function() {
@@ -128,11 +129,12 @@ angular.module('risevision.widget.common')
 
   }])
 
-  .service('settingsGetter', ['$q', 'gadgetsApi', '$log', 'settingsParser', '$window',
-    function ($q, gadgetsApi, $log, settingsParser, $window) {
+  .service('settingsGetter', ['$q', 'gadgetsApi', '$log', 'settingsParser', '$window', 'defaultSettings',
+    function ($q, gadgetsApi, $log, settingsParser, $window, defaultSettings) {
+
       this.getAdditionalParams = function () {
         var deferred = $q.defer();
-
+        var defaultAdditionalParams = defaultSettings.additionalParams || {};
         gadgetsApi.rpc.call('', 'rscmd_getAdditionalParams', function (result) {
           if(result) {
             result = settingsParser.parseAdditionalParams(result);
@@ -141,14 +143,16 @@ angular.module('risevision.widget.common')
             result = {};
           }
           $log.debug('getAdditionalParams returns ', result);
-          deferred.resolve(result);
+          deferred.resolve(angular.extend(defaultAdditionalParams, result));
         });
 
         return deferred.promise;
       };
 
       this.getParams = function () {
-        return settingsParser.parseParams($window.location.search);
+        var defaultParams = defaultSettings.params || {};
+        return angular.extend(defaultParams,
+          settingsParser.parseParams($window.location.search));
       };
   }])
 
@@ -199,4 +203,6 @@ angular.module('risevision.widget.common')
       return result;
     };
 
-  }]);
+  }])
+
+  .value('defaultSettings', {});

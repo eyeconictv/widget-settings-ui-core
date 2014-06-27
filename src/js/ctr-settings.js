@@ -49,6 +49,7 @@ angular.module('risevision.widget.common')
     $scope.settings.params = settingsGetter.getParams();
     $scope.loadAdditionalParams();
 
+
   }])
 
   .directive('scrollOnAlerts', function() {
