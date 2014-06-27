@@ -13,7 +13,7 @@
 
   describe('Settings UI', function() {
     beforeEach(function (){
-      browser.get('/test/e2e/test.html?up_id=hello&textSetting1=abc');
+      browser.get('/test/e2e/test.html?up_id=hello&up_textSetting1=abc');
     });
 
     it('Should correctly load settings', function () {
@@ -33,7 +33,7 @@
       expect(browser.executeScript('return window.result')).to.eventually.deep.equal(
         {
           'additionalParams': '{"textSetting":"bye world","checkboxSetting":false,"textAreaSetting":"the quick brown fox jumps over the lazy dog"}',
-          'params': '?up_id=hello&textSetting1=defg'
+          'params': '?up_id=hello&up_textSetting1=defg'
         });
     });
   });

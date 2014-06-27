@@ -5,7 +5,7 @@ describe('Settings UI', function() {
   beforeEach(module('risevision.widget.common'));
 
     var settings = {
-      params: {up_id: 'world_clock'},
+      params: {id: 'world_clock'},
       additionalParams: {'font-picker-visible': true, 'color': 'blue'}
     };
 
@@ -79,11 +79,11 @@ describe('Settings UI', function() {
   describe('settingsParser', function () {
 
     var params = {
-      'up_layout': 'three-day', 'up_address': 'geolocation',
-      'up_custom-address': '', 'up_description':'service',
-      'up_unit':'celsius', 'up_wind-speed':'kph',
-      'up_background-color':'', 'up_show-humidity': 'true',
-      'up_terms': 'true'
+      'layout': 'three-day', 'address': 'geolocation',
+      'custom-address': '', 'description':'service',
+      'unit':'celsius', 'wind-speed':'kph',
+      'background-color':'', 'show-humidity': 'true',
+      'terms': 'true'
     };
 
     var paramsStr = '?up_layout=three-day&up_address=geolocation&up_custom-address'+
