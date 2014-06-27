@@ -5,12 +5,12 @@ describe('Settings UI', function() {
   beforeEach(module('risevision.widget.common'));
 
     var settings = {
-      params: {id: 'world_clock'},
+      params: {id: 'abc'},
       additionalParams: {'font-picker-visible': true, 'color': 'blue'}
     };
 
     var settingsStr = {
-      params: '?up_id=world_clock',
+      params: '?up_id=abc',
       additionalParams: '{"font-picker-visible":true,"color":"blue"}'
     };
 
@@ -70,6 +70,27 @@ describe('Settings UI', function() {
       inject(function (settingsGetter) {
         settingsGetter.getAdditionalParams().should.eventually.deep.equal(
           settings.additionalParams
+        ).notify(done);
+      });
+    });
+
+    it('should honor default settings', function (done) {
+      module(function ($provide) {
+        //stub services
+        $provide.value('defaultSettings', {
+          params: {id: 'ddd', message: 'yolo'}, //id should not be overridden
+          additionalParams: { color: 'red', greetings: 'hello' } //color should not be overriden
+        });
+      });
+
+      inject(function (settingsGetter) {
+
+        settingsGetter.getParams().should.deep.equal(
+          angular.extend(settings.params, {message: 'yolo'})
+        );
+
+        settingsGetter.getAdditionalParams().should.eventually.deep.equal(
+          angular.extend(settings.additionalParams, {greetings: 'hello'})
         ).notify(done);
       });
     });

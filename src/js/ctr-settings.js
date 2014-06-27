@@ -19,8 +19,6 @@ angular.module('risevision.widget.common')
       $scope.settings.additionalParams[name] = val;
     };
 
-
-
     $scope.loadAdditionalParams = function () {
       settingsGetter.getAdditionalParams().then(function (additionalParams) {
         $scope.settings.additionalParams = additionalParams;
@@ -48,7 +46,6 @@ angular.module('risevision.widget.common')
 
     $scope.settings.params = settingsGetter.getParams();
     $scope.loadAdditionalParams();
-
   }])
 
   .directive('scrollOnAlerts', function() {
