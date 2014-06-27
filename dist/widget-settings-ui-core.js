@@ -22,8 +22,6 @@ angular.module('risevision.widget.common')
       $scope.settings.additionalParams[name] = val;
     };
 
-
-
     $scope.loadAdditionalParams = function () {
       settingsGetter.getAdditionalParams().then(function (additionalParams) {
         $scope.settings.additionalParams = additionalParams;
@@ -51,8 +49,6 @@ angular.module('risevision.widget.common')
 
     $scope.settings.params = settingsGetter.getParams();
     $scope.loadAdditionalParams();
-
-
   }])
 
   .directive('scrollOnAlerts', function() {
@@ -185,7 +181,7 @@ angular.module('risevision.widget.common')
         return name.slice(3);
       }
       else {
-        return name;
+        return null;
       }
     }
 
@@ -198,7 +194,11 @@ angular.module('risevision.widget.common')
       var vars = paramsStr.split('&');
       for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split('=');
-        result[stripPrefix(decodeURIComponent(pair[0]))] = decodeURIComponent(pair[1]);
+        var name = stripPrefix(decodeURIComponent(pair[0]));
+        if (name) {
+          //save settings only if it has up_ prefix. Ignore otherwise
+          result[name] = decodeURIComponent(pair[1]);
+        }
       }
       return result;
     };

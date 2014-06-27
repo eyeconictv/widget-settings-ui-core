@@ -19,7 +19,7 @@ describe('Settings UI', function() {
     $provide.service('$q', function() {return Q;});
     $provide.value('$window', {
       location: {
-        search: '?up_id=abc'
+        search: '?up_id=abc&windowSize=200'
       }
     });
 
@@ -79,6 +79,7 @@ describe('Settings UI', function() {
         //stub services
         $provide.value('defaultSettings', {
           params: {id: 'ddd', message: 'yolo'}, //id should not be overridden
+                                                //windowSize should be ignored
           additionalParams: { color: 'red', greetings: 'hello' } //color should not be overriden
         });
       });

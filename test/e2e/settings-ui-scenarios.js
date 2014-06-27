@@ -13,7 +13,7 @@
 
   describe('Settings UI', function() {
     beforeEach(function (){
-      browser.get('/test/e2e/test.html?up_id=hello&up_textSetting1=abc');
+      browser.get('/test/e2e/test.html?up_id=hello&up_textSetting1=abc&windowSize=200');
     });
 
     it('Should correctly load settings', function () {
