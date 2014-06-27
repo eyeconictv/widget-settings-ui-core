@@ -170,11 +170,20 @@ angular.module('risevision.widget.common')
       var str = [];
       for(var p in params) {
         if (params.hasOwnProperty(p)) {
-          str.push(encodeURIComponent(p) + '=' + encodeURIComponent(params[p]));
+          str.push('up_' + encodeURIComponent(p) + '=' + encodeURIComponent(params[p]));
         }
       }
       return '?' + str.join('&');
     };
+
+    function stripPrefix(name) {
+      if(name.indexOf('up_') === 0) {
+        return name.slice(3);
+      }
+      else {
+        return name;
+      }
+    }
 
     this.parseParams = function (paramsStr) {
       //get rid of preceeding '?'
@@ -185,7 +194,7 @@ angular.module('risevision.widget.common')
       var vars = paramsStr.split('&');
       for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split('=');
-        result[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+        result[stripPrefix(decodeURIComponent(pair[0]))] = decodeURIComponent(pair[1]);
       }
       return result;
     };
