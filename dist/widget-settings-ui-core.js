@@ -37,7 +37,7 @@ angular.module('risevision.widget.common')
       //clear out previous alerts, if any
       $scope.alerts = [];
 
-      $scope.$emit('collectAdditionalParams');
+      $scope.$broadcast('collectAdditionalParams');
 
       settingsSaver.saveSettings($scope.settings).then(function () {
         //TODO: perhaps show some indicator in UI?

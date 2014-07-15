@@ -22,7 +22,7 @@
     "tests"
   ],
   "devDependencies": {
-    "angular": "~1.2.18",
+    "angular": "1.2.18",
     "q": "1.0.1",
     "jquery": "1.11.0",
     "sinon": "~1.10.2"
