@@ -1,6 +1,6 @@
 {
   "name": "widget-settings-ui-core",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "homepage": "https://github.com/Rise-Vision/widget-settings-ui-core",
   "authors": [
     "Xiyang Chen <settinghead@gmail.com>"
@@ -29,6 +29,8 @@
   },
   "dependencies": {
     "angular": "1.2.18",
-    "angular-mocks": "1.2.18"
+    "angular-mocks": "1.2.18",
+    "angular-translate": "~2.2.0",
+    "angular-translate-loader-static-files": "~2.2.0"
   }
 }
