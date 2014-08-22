@@ -4,22 +4,22 @@
 describe('Settings UI', function() {
   beforeEach(module('risevision.widget.common'));
 
-    var settings = {
-      params: {id: 'abc'},
-      additionalParams: {'font-picker-visible': true, 'color': 'blue'}
-    };
+  var settings = {
+    params: {id: 'abc', color: 'blue', background: {color: 'transparent'}},
+    additionalParams: {'font-picker-visible': true, 'color': 'blue'}
+  };
 
-    var settingsStr = {
-      params: '?up_id=abc',
-      additionalParams: '{"font-picker-visible":true,"color":"blue"}'
-    };
+  var settingsStr = {
+    params: '?up_color=blue&up_background=%7B%22color%22%3A%22transparent%22%7D',
+    additionalParams: '{"font-picker-visible":true,"color":"blue"}'
+  };
 
-    beforeEach(module(function ($provide) {
+  beforeEach(module(function ($provide) {
     //stub services
     $provide.service('$q', function() {return Q;});
     $provide.value('$window', {
       location: {
-        search: '?up_id=abc&windowSize=200'
+        search: '?up_id=abc&up_color=blue&up_background=%7B%22color%22%3A%22transparent%22%7D&windowSize=200'
       }
     });
 
@@ -102,15 +102,15 @@ describe('Settings UI', function() {
 
     var params = {
       'layout': 'three-day', 'address': 'geolocation',
-      'custom-address': '', 'description':'service',
+      'custom-address': null, 'description':'service',
       'unit':'celsius', 'wind-speed':'kph',
-      'background-color':'', 'show-humidity': 'true',
-      'terms': 'true'
+      'background-color': null, 'show-humidity': true,
+      'terms': true
     };
 
     var paramsStr = '?up_layout=three-day&up_address=geolocation&up_custom-address'+
-    '=&up_description=service&up_unit=celsius&up_wind-speed=kph&up_background-colo'+
-    'r=&up_show-humidity=true&up_terms=true';
+    '=null&up_description=service&up_unit=celsius&up_wind-speed=kph&up_background-'+
+    'color=null&up_show-humidity=true&up_terms=true';
 
     var additionalParamsStr = '{"layout-url":"","custom-description":"",' +
     '"current-temp-font":"Verdana","current-temp-font-style":"Verdana, Geneva,' +

@@ -33,7 +33,7 @@
       expect(browser.executeScript('return window.result')).to.eventually.deep.equal(
         {
           'additionalParams': '{"textSetting":"bye world","checkboxSetting":false,"textAreaSetting":"the quick brown fox jumps over the lazy dog"}',
-          'params': '?up_id=hello&up_textSetting1=defg'
+          'params': '?up_textSetting1=defg'
         });
     });
   });
