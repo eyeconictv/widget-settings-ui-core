@@ -36,6 +36,11 @@ describe('Settings UI', function() {
             callback(settingsStr.additionalParams);
           }
         }
+        else if (methodName === 'rscmd_closeSettings'){
+          if(callback) {
+            callback(true);
+          }
+        }
         else {throw 'Unknown method'; }
       }
     });
@@ -53,6 +58,30 @@ describe('Settings UI', function() {
       inject(function (settingsSaver) {
         settingsSaver.saveSettings(settings).should.eventually.deep.equal(
           settingsStr
+        ).notify(done);
+      });
+    });
+  });
+
+  describe('settingsCloser', function () {
+    it('should exist', function(done) {
+      inject(function (settingsCloser) {
+        expect(settingsCloser).be.defined;
+        done();
+      });
+    });
+
+    it('close command should exist', function (done) {
+      inject(function (settingsCloser) {
+        expect(settingsCloser.closeSettings).be.defined;
+        done();
+      });
+    });
+
+    it('should send close command', function (done) {
+      inject(function (settingsCloser) {
+        settingsCloser.closeSettings().should.eventually.equal(
+          true
         ).notify(done);
       });
     });

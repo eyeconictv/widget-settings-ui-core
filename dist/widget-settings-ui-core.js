@@ -1,9 +1,8 @@
-
 angular.module('risevision.widget.common', []);
 
 angular.module('risevision.widget.common')
-  .controller('settingsController', ['$scope', 'settingsSaver', 'settingsGetter',
-    function ($scope, settingsSaver, settingsGetter) {
+  .controller('settingsController', ['$scope', 'settingsSaver', 'settingsGetter', 'settingsCloser',
+    function ($scope, settingsSaver, settingsGetter, settingsCloser) {
 
     $scope.settings = { params: {}, additionalParams: {}};
     $scope.alerts = [];
@@ -41,6 +40,15 @@ angular.module('risevision.widget.common')
 
       settingsSaver.saveSettings($scope.settings).then(function () {
         //TODO: perhaps show some indicator in UI?
+      }, function (err) {
+        $scope.alerts = err.alerts;
+      });
+
+    };
+
+    $scope.closeSettings = function() {
+      settingsCloser.closeSettings().then(function () {
+        //TODO:
       }, function (err) {
         $scope.alerts = err.alerts;
       });
@@ -225,6 +233,21 @@ angular.module('risevision.widget.common')
         }
       }
       return result;
+    };
+
+  }])
+
+  .service('settingsCloser', ['$q', '$log', 'gadgetsApi',
+  function ($q, $log, gadgetsApi) {
+
+    this.closeSettings = function () {
+      var deferred = $q.defer();
+
+      gadgetsApi.rpc.call('', 'rscmd_closeSettings', function () {
+        deferred.resolve(true);
+      });
+
+      return deferred.promise;
     };
 
   }])

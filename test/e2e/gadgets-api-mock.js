@@ -17,6 +17,14 @@ window.gadgets = {
       }
       else{ return params; }
     }
+    else if (methodName === 'rscms_closeSettings') {
+      if(callback) {
+        callback(true);
+      }
+      else {
+        return true;
+      }
+    }
     else if (methodName === 'rscmd_getAdditionalParams'){
       if(callback) {
         callback(window.result.additionalParams);
