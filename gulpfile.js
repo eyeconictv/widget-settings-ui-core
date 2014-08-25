@@ -8,26 +8,13 @@
   var connect = require('gulp-connect');
   var rename = require('gulp-rename');
   var concat = require('gulp-concat');
-  var karma = require('gulp-karma');
   var bump = require('gulp-bump');
   var watch = require('gulp-watch');
   var path = require('path');
   var jshint = require('gulp-jshint');
-  var protractor = require('gulp-protractor').protractor;
-  var webdriver_update = require('gulp-protractor').webdriver_update;
-  var httpServer;
-  var testFiles = [
-      'components/jquery/dist/jquery.js',
-      'components/q/q.js',
-      'components/angular/angular.js',
-      'components/angular-mocks/angular-mocks.js',
-      'src/js/*.js',
-      'src/js/*/*.js',
-      'src/js/**/*.js',
-      'src/js/**/**/*.js',
-      'test/unit/fixtures/*.js',
-      'test/unit/**/*spec.js'
-    ];
+  var runSequence = require('run-sequence');
+  var factory = require("widget-tester").gulpTaskFactory;
+
   var appJSFiles = [
       'src/js/**/*.js',
       'test/**/*.js'
@@ -50,45 +37,6 @@
     .pipe(gulp.dest('./'));
   });
 
-  gulp.task('unit:test-watch', function () {
-      // Be sure to return the stream
-      return gulp.src(testFiles).pipe(
-        watch(function(files) {
-          return files.pipe(karma({
-            configFile: 'test/karma.conf.js',
-            action: 'start'
-          }))
-          .on('error', function(err) {
-            // Make sure failed tests cause gulp to exit non-zero
-            throw err;
-          });
-        }));
-  });
-
-  gulp.task('unit:test', function() {
-  // Be sure to return the stream
-    return gulp.src(testFiles)
-      .pipe(karma({
-        configFile: 'test/karma-jenkins.conf.js',
-        action: 'run'
-      }))
-      .on('error', function(err) {
-        // Make sure failed tests cause gulp to exit non-zero
-        throw err;
-      });
-});
-
-  gulp.task('e2e:server', ['build'], function() {
-    httpServer = connect.server({
-      root: './',
-      port: 8098,
-      livereload: false
-    });
-    return httpServer;
-  });
-
-  gulp.task('webdriver_update', webdriver_update);
-
   gulp.task('lint', function() {
     return gulp.src(appJSFiles)
       .pipe(jshint())
@@ -96,20 +44,6 @@
       .pipe(jshint.reporter('fail'))
       .on('error', function(err) {
         throw err;
-      });
-  });
-  gulp.task('e2e:test', ['webdriver_update', 'e2e:server'], function () {
-    return gulp.src(['./test/e2e/*-scenarios.js'])
-      .pipe(protractor({
-          configFile: './test/protractor.conf.js',
-          args: ['--baseUrl', 'http://127.0.0.1:8098/test/e2e/test.html']
-      }))
-      .on('error', function (e) {
-        console.log('Error:', e); throw e;
-      })
-      .on('end', function () {
-        console.log('Test ending');
-        connect.serverClose();
       });
   });
 
@@ -121,7 +55,31 @@
 
   gulp.task('build', ['lint', 'concat']);
 
-  gulp.task('test', ['unit:test', 'e2e:test']);
+  gulp.task("e2e:server", ["config"], factory.testServer());
+  gulp.task("test:e2e", ["e2e:server"], factory.testE2E());
+
+  gulp.task("test:unit:ng", factory.testUnitAngular(
+    {testFiles: [
+          'components/jquery/dist/jquery.js',
+          'components/q/q.js',
+          'components/angular/angular.js',
+          'components/angular-mocks/angular-mocks.js',
+          'src/js/*.js',
+          'src/js/*/*.js',
+          'src/js/**/*.js',
+          'src/js/**/**/*.js',
+          'test/unit/fixtures/*.js',
+          'test/unit/**/*spec.js']}
+  ));
+
+  gulp.task("webdriver_update", factory.webdriveUpdate());
+  gulp.task("e2e:server-close", factory.testServerClose());
+  gulp.task("test:e2e:settings", ["webdriver_update", "e2e:server"], factory.testE2EAngular());
+  gulp.task("test:metrics", factory.metrics());
+
+  gulp.task("test", function(cb) {
+    runSequence("test:unit:ng", "test:e2e:settings", "e2e:server-close", "test:metrics", cb);
+  });
 
   gulp.task('default', ['build']);
 

@@ -138,4 +138,19 @@ angular.module('risevision.widget.common')
 
   }])
 
+  .service('settingsCloser', ['$q', '$log', 'gadgetsApi',
+  function ($q, $log, gadgetsApi) {
+
+    this.closeSettings = function () {
+      var deferred = $q.defer();
+
+      gadgetsApi.rpc.call('', 'rscmd_closeSettings', function () {
+        deferred.resolve(true);
+      });
+
+      return deferred.promise;
+    };
+
+  }])
+
   .value('defaultSettings', {});

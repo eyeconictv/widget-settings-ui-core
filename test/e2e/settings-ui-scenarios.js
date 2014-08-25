@@ -36,5 +36,17 @@
           'params': '?up_textSetting1=defg'
         });
     });
+
+    it('Should correctly close settings', function (done) {
+      element(by.id('textSettingInParams')).clear().sendKeys('defg');
+      element(by.id('textSetting')).clear().sendKeys('bye world');
+      element(by.id('checkboxSetting')).click();
+      element(by.id('textAreaSetting')).clear().sendKeys('There is nothing either good or bad but thinking makes it so.');
+      element(by.id('closeSettings')).click();
+      expect(browser.executeScript('return window.result')).to.eventually.deep.equal(
+        {
+          'additionalParams': '{"textSetting":"hello world","checkboxSetting":true,"textAreaSetting":"the quick brown fox jumps over the lazy dog"}'
+        });
+    });
   });
 })();
