@@ -45,7 +45,8 @@
       element(by.id('closeSettings')).click();
       expect(browser.executeScript('return window.result')).to.eventually.deep.equal(
         {
-          'additionalParams': '{"textSetting":"hello world","checkboxSetting":true,"textAreaSetting":"the quick brown fox jumps over the lazy dog"}'
+          'additionalParams': '{"textSetting":"hello world","checkboxSetting":true,"textAreaSetting":"the quick brown fox jumps over the lazy dog"}',
+          'params': '?up_textSetting1=defg'
         });
     });
   });
