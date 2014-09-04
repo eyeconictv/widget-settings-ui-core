@@ -137,6 +137,7 @@ angular.module('risevision.widget.common')
       var newSettings = angular.copy(settings);
 
       delete newSettings.params.id;
+      delete newSettings.params.companyId;
       delete newSettings.params.rsW;
       delete newSettings.params.rsH;
 
