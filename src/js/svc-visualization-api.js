@@ -1,8 +1,8 @@
 (function (angular) {
-  'use strict';
+  "use strict";
 
-  angular.module('risevision.widget.common.visualization')
-    .factory('visualizationApi', ['$q', '$window', function ($q, $window) {
+  angular.module("risevision.widget.common.visualization", [])
+    .factory("visualizationApi", ["$q", "$window", function ($q, $window) {
       var deferred = $q.defer();
       var promise;
 
@@ -27,5 +27,3 @@
     }]);
 
 })(angular);
-
-
