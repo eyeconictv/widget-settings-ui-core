@@ -1,5 +1,5 @@
-angular.module('risevision.widget.common')
-  .controller('settingsController', ['$scope', 'settingsSaver', 'settingsGetter', 'settingsCloser',
+angular.module("risevision.widget.common")
+  .controller("settingsController", ["$scope", "settingsSaver", "settingsGetter", "settingsCloser",
     function ($scope, settingsSaver, settingsGetter, settingsCloser) {
 
     $scope.settings = { params: {}, additionalParams: {}};
@@ -34,7 +34,7 @@ angular.module('risevision.widget.common')
       //clear out previous alerts, if any
       $scope.alerts = [];
 
-      $scope.$broadcast('collectAdditionalParams');
+      $scope.$broadcast("collectAdditionalParams");
 
       settingsSaver.saveSettings($scope.settings).then(function () {
         //TODO: perhaps show some indicator in UI?
@@ -57,14 +57,14 @@ angular.module('risevision.widget.common')
     $scope.loadAdditionalParams();
   }])
 
-  .directive('scrollOnAlerts', function() {
+  .directive("scrollOnAlerts", function() {
     return {
-      restrict: 'A', //restricts to attributes
+      restrict: "A", //restricts to attributes
       scope: false,
       link: function($scope, $elm) {
-        $scope.$watchCollection('alerts', function (newAlerts, oldAlerts) {
+        $scope.$watchCollection("alerts", function (newAlerts, oldAlerts) {
           if(newAlerts.length > 0 && oldAlerts.length === 0) {
-            $('body').animate({scrollTop: $elm.offset().top}, 'fast');
+            $("body").animate({scrollTop: $elm.offset().top}, "fast");
           }
         });
       }

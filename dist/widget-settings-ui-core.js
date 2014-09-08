@@ -1,7 +1,7 @@
-angular.module('risevision.widget.common', []);
+angular.module("risevision.widget.common", []);
 
-angular.module('risevision.widget.common')
-  .controller('settingsController', ['$scope', 'settingsSaver', 'settingsGetter', 'settingsCloser',
+angular.module("risevision.widget.common")
+  .controller("settingsController", ["$scope", "settingsSaver", "settingsGetter", "settingsCloser",
     function ($scope, settingsSaver, settingsGetter, settingsCloser) {
 
     $scope.settings = { params: {}, additionalParams: {}};
@@ -36,7 +36,7 @@ angular.module('risevision.widget.common')
       //clear out previous alerts, if any
       $scope.alerts = [];
 
-      $scope.$broadcast('collectAdditionalParams');
+      $scope.$broadcast("collectAdditionalParams");
 
       settingsSaver.saveSettings($scope.settings).then(function () {
         //TODO: perhaps show some indicator in UI?
@@ -59,36 +59,36 @@ angular.module('risevision.widget.common')
     $scope.loadAdditionalParams();
   }])
 
-  .directive('scrollOnAlerts', function() {
+  .directive("scrollOnAlerts", function() {
     return {
-      restrict: 'A', //restricts to attributes
+      restrict: "A", //restricts to attributes
       scope: false,
       link: function($scope, $elm) {
-        $scope.$watchCollection('alerts', function (newAlerts, oldAlerts) {
+        $scope.$watchCollection("alerts", function (newAlerts, oldAlerts) {
           if(newAlerts.length > 0 && oldAlerts.length === 0) {
-            $('body').animate({scrollTop: $elm.offset().top}, 'fast');
+            $("body").animate({scrollTop: $elm.offset().top}, "fast");
           }
         });
       }
     };
 });
 
-angular.module('risevision.widget.common')
-  .factory('commonSettings', ['$log', function ($log) {
-    $log.debug('Initializing new RiseVision common settings instance...');
+angular.module("risevision.widget.common")
+  .factory("commonSettings", ["$log", function ($log) {
+    $log.debug("Initializing new RiseVision common settings instance...");
     //return new RiseVision.Common.Settings();
   }]);
 
-angular.module('risevision.widget.common')
-  .factory('gadgetsApi', ['$window', function ($window) {
+angular.module("risevision.widget.common")
+  .factory("gadgetsApi", ["$window", function ($window) {
     return $window.gadgets;
   }]);
 
-angular.module('risevision.widget.common')
-  .service('i18nLoader', ['$window', '$q', function ($window, $q) {
+angular.module("risevision.widget.common")
+  .service("i18nLoader", ["$window", "$q", function ($window, $q) {
     var deferred = $q.defer();
 
-    $window.i18n.init({ fallbackLng: 'en' }, function () {
+    $window.i18n.init({ fallbackLng: "en" }, function () {
       deferred.resolve($window.i18n);
     });
 
@@ -97,8 +97,8 @@ angular.module('risevision.widget.common')
     };
   }]);
 
-angular.module('risevision.widget.common')
-  .service('settingsSaver', ['$q', '$log', 'gadgetsApi', 'settingsParser',
+angular.module("risevision.widget.common")
+  .service("settingsSaver", ["$q", "$log", "gadgetsApi", "settingsParser",
   function ($q, $log, gadgetsApi, settingsParser) {
 
     this.saveSettings = function (settings, validator) {
@@ -112,7 +112,7 @@ angular.module('risevision.widget.common')
       }
 
       if(alerts.length > 0) {
-        $log.debug('Validation failed.', alerts);
+        $log.debug("Validation failed.", alerts);
         deferred.reject({alerts: alerts});
       }
 
@@ -120,9 +120,9 @@ angular.module('risevision.widget.common')
       var additionalParamsStr =
         settingsParser.encodeAdditionalParams(settings.additionalParams);
 
-      gadgetsApi.rpc.call('', 'rscmd_saveSettings', function (result) {
-        $log.debug('encoded settings', JSON.stringify(result));
-        $log.debug('Settings saved. ', settings);
+      gadgetsApi.rpc.call("", "rscmd_saveSettings", function (result) {
+        $log.debug("encoded settings", JSON.stringify(result));
+        $log.debug("Settings saved. ", settings);
 
         deferred.resolve(result);
       }, {
@@ -146,20 +146,20 @@ angular.module('risevision.widget.common')
 
   }])
 
-  .service('settingsGetter', ['$q', 'gadgetsApi', '$log', 'settingsParser', '$window', 'defaultSettings',
+  .service("settingsGetter", ["$q", "gadgetsApi", "$log", "settingsParser", "$window", "defaultSettings",
     function ($q, gadgetsApi, $log, settingsParser, $window, defaultSettings) {
 
       this.getAdditionalParams = function () {
         var deferred = $q.defer();
         var defaultAdditionalParams = defaultSettings.additionalParams || {};
-        gadgetsApi.rpc.call('', 'rscmd_getAdditionalParams', function (result) {
+        gadgetsApi.rpc.call("", "rscmd_getAdditionalParams", function (result) {
           if(result) {
             result = settingsParser.parseAdditionalParams(result);
           }
           else {
             result = {};
           }
-          $log.debug('getAdditionalParams returns ', result);
+          $log.debug("getAdditionalParams returns ", result);
           deferred.resolve(angular.extend(defaultAdditionalParams, result));
         });
 
@@ -173,7 +173,7 @@ angular.module('risevision.widget.common')
       };
   }])
 
-  .service('settingsParser', [function () {
+  .service("settingsParser", [function () {
     this.parseAdditionalParams = function (additionalParamsStr) {
       if(additionalParamsStr) {
         return JSON.parse(additionalParamsStr);
@@ -192,20 +192,20 @@ angular.module('risevision.widget.common')
       for(var p in params) {
         if (params.hasOwnProperty(p)) {
           var value;
-          if (typeof params[p] === 'object') {
+          if (typeof params[p] === "object") {
             value = JSON.stringify(params[p]);
           }
           else {
             value = params[p];
           }
-          str.push('up_' + encodeURIComponent(p) + '=' + encodeURIComponent(value));
+          str.push("up_" + encodeURIComponent(p) + "=" + encodeURIComponent(value));
         }
       }
-      return '?' + str.join('&');
+      return "?" + str.join("&");
     };
 
     function stripPrefix(name) {
-      if(name.indexOf('up_') === 0) {
+      if(name.indexOf("up_") === 0) {
         return name.slice(3);
       }
       else {
@@ -214,14 +214,14 @@ angular.module('risevision.widget.common')
     }
 
     this.parseParams = function (paramsStr) {
-      //get rid of preceeding '?'
-      if(paramsStr[0] === '?') {
+      //get rid of preceeding "?"
+      if(paramsStr[0] === "?") {
         paramsStr = paramsStr.slice(1);
       }
       var result = {};
-      var vars = paramsStr.split('&');
+      var vars = paramsStr.split("&");
       for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split('=');
+        var pair = vars[i].split("=");
         var name = stripPrefix(decodeURIComponent(pair[0]));
         //save settings only if it has up_ prefix. Ignore otherwise
         if (name) {
@@ -238,13 +238,13 @@ angular.module('risevision.widget.common')
 
   }])
 
-  .service('settingsCloser', ['$q', '$log', 'gadgetsApi',
+  .service("settingsCloser", ["$q", "$log", "gadgetsApi",
   function ($q, $log, gadgetsApi) {
 
     this.closeSettings = function () {
       var deferred = $q.defer();
 
-      gadgetsApi.rpc.call('', 'rscmd_closeSettings', function () {
+      gadgetsApi.rpc.call("", "rscmd_closeSettings", function () {
         deferred.resolve(true);
       });
 
@@ -253,13 +253,13 @@ angular.module('risevision.widget.common')
 
   }])
 
-  .value('defaultSettings', {});
+  .value("defaultSettings", {});
 
 (function (angular) {
-  'use strict';
+  "use strict";
 
-  angular.module('risevision.widget.common.visualization')
-    .factory('visualizationApi', ['$q', '$window', function ($q, $window) {
+  angular.module("risevision.widget.common.visualization", [])
+    .factory("visualizationApi", ["$q", "$window", function ($q, $window) {
       var deferred = $q.defer();
       var promise;
 
@@ -284,5 +284,3 @@ angular.module('risevision.widget.common')
     }]);
 
 })(angular);
-
-
