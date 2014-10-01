@@ -24,6 +24,7 @@ angular.module("risevision.widget.common")
     $scope.loadAdditionalParams = function () {
       settingsGetter.getAdditionalParams().then(function (additionalParams) {
         $scope.settings.additionalParams = additionalParams;
+        $scope.$broadcast("loadAdditionalParams", additionalParams);
       },
       function (err) {alert (err); });
     };
