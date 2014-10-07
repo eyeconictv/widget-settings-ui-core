@@ -10,7 +10,7 @@ describe("Settings UI", function() {
   };
 
   var settingsStr = {
-    params: "?up_color=blue&up_background=%7B%22color%22%3A%22transparent%22%7D",
+    params: "up_color=blue&up_background=%7B%22color%22%3A%22transparent%22%7D",
     additionalParams: "{\"font-picker-visible\":true,\"color\":\"blue\"}"
   };
 
@@ -137,7 +137,7 @@ describe("Settings UI", function() {
       "terms": true
     };
 
-    var paramsStr = "?up_layout=three-day&up_address=geolocation&up_custom-address"+
+    var paramsStr = "up_layout=three-day&up_address=geolocation&up_custom-address"+
     "=null&up_description=service&up_unit=celsius&up_wind-speed=kph&up_background-"+
     "color=null&up_show-humidity=true&up_terms=true";
 
