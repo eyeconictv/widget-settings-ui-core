@@ -102,7 +102,8 @@ angular.module("risevision.widget.common")
           str.push("up_" + encodeURIComponent(p) + "=" + encodeURIComponent(value));
         }
       }
-      return "?" + str.join("&");
+
+      return str.join("&");
     };
 
     function stripPrefix(name) {
