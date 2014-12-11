@@ -104,7 +104,7 @@ angular.module("risevision.widget.common")
 
     this.saveSettings = function (settings, validator) {
       var deferred = $q.defer();
-      var alerts = [];
+      var alerts = [], str = "";
 
       settings = processSettings(settings);
 
@@ -117,7 +117,15 @@ angular.module("risevision.widget.common")
         deferred.reject({alerts: alerts});
       }
 
-      var str = settingsParser.encodeParams(settings.params);
+      if (settings.params.hasOwnProperty("layoutURL")) {
+        // ensure the url is the start of the string
+        str += settings.params.layoutURL + "?";
+        // delete this property so its not included below in encodeParams call
+        delete settings.params.layoutURL;
+      }
+
+      str += settingsParser.encodeParams(settings.params);
+
       var additionalParamsStr =
         settingsParser.encodeAdditionalParams(settings.additionalParams);
 
