@@ -122,6 +122,31 @@ angular.module("risevision.widget.common")
   }]);
 
 angular.module("risevision.widget.common")
+  .factory("imageValidator", ["$q", function ($q) {
+    var factory = {
+      // Verify that URL is a valid image file.
+      isImage: function(src) {
+        var deferred = $q.defer(),
+          image = new Image();
+
+        image.onload = function() {
+          deferred.resolve(true);
+        };
+
+        image.onerror = function() {
+          deferred.resolve(false);
+        };
+
+        image.src = src;
+
+        return deferred.promise;
+      }
+    };
+
+    return factory;
+  }]);
+
+angular.module("risevision.widget.common")
   .service("settingsSaver", ["$q", "$log", "gadgetsApi", "settingsParser",
   function ($q, $log, gadgetsApi, settingsParser) {
 
