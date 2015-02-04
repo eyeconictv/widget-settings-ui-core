@@ -1,6 +1,6 @@
 {
   "name": "widget-settings-ui-core",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Common components shared across Rise Vision widget settings UI",
   "main": "gulpfile.js",
   "directories": {
@@ -50,7 +50,6 @@
     "karma-mocha": "~0.1.4",
     "karma-phantomjs-launcher": "~0.1.4",
     "mocha": "~1.20.1",
-    "phantomjs": "~1.9.7",
     "phantomjs": "^1.9.7",
     "protractor": "~1.0.0",
     "widget-tester": "git://github.com/Rise-Vision/widget-tester.git"

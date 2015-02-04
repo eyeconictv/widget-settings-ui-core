@@ -5,7 +5,7 @@ angular.module("risevision.widget.common")
     var factory = {
       getStorageUrlData: function (url) {
         var storage = {},
-          str, arr;
+          str, arr, params, pair;
 
         if (url.indexOf(STORAGE_URL_BASE) !== -1) {
           str = url.split(STORAGE_URL_BASE)[1];
@@ -16,10 +16,24 @@ angular.module("risevision.widget.common")
             arr[arr.length - 2] : "";
           storage.fileName = arr[arr.length - 1];
         }
+        // Check if a folder was selected.
+        else {
+          params = url.split("?");
+
+          for (var i = 0; i < params.length; i++) {
+            pair = params[i].split("=");
+
+            if (pair[0] === "prefix") {
+              storage.folder = decodeURIComponent(pair[1]);
+              storage.fileName = "";
+              break;
+            }
+          }
+        }
 
         return storage;
       }
     };
-    return factory;
 
+    return factory;
   }]);
