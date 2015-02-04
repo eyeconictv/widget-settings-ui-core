@@ -32,7 +32,7 @@ describe("Common Settings", function() {
 
     it("should return an object with folder and fileName properties", function () {
       // storage url, file was within a folder(s)
-      var url = "https://storage.googleapis.com/risemedialibrary-dd474bee-b237-46e3-aa20-98e975679773/videos%2Fa_food_show.webm";
+      var url = "https://storage.googleapis.com/risemedialibrary-xxx/videos%2Fa_food_show.webm";
 
       expect(commonSettings.getStorageUrlData(url)).to.deep.equal({
         "folder": "videos",
@@ -42,11 +42,21 @@ describe("Common Settings", function() {
 
     it("should return an object with empty folder value", function () {
       // storage url, file was not within a folder(s)
-      var url = "https://storage.googleapis.com/risemedialibrary-dd474bee-b237-46e3-aa20-98e975679773/a_food_show.webm";
+      var url = "https://storage.googleapis.com/risemedialibrary-xxx/a_food_show.webm";
 
       expect(commonSettings.getStorageUrlData(url)).to.deep.equal({
         "folder": "",
         "fileName": "a_food_show.webm"
+      });
+    });
+
+    it("should return an object with empty fileName value", function () {
+      // storage url, file was not within a folder(s)
+      var url = "https://www.googleapis.com/storage/v1/b/risemedialibrary-xxx/o?prefix=images%2F";
+
+      expect(commonSettings.getStorageUrlData(url)).to.deep.equal({
+        "folder": "images/",
+        "fileName": ""
       });
     });
   });
