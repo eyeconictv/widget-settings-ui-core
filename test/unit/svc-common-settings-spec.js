@@ -35,7 +35,7 @@ describe("Common Settings", function() {
       var url = "https://storage.googleapis.com/risemedialibrary-xxx/videos%2Fa_food_show.webm";
 
       expect(commonSettings.getStorageUrlData(url)).to.deep.equal({
-        "folder": "videos",
+        "folder": "videos/",
         "fileName": "a_food_show.webm"
       });
     });
@@ -50,15 +50,33 @@ describe("Common Settings", function() {
       });
     });
 
-    it("should return an object with empty fileName value", function () {
+    it("should return an object with file name and nested folder value", function () {
+      // storage url, file was within nested folders
+      var url = "https://storage.googleapis.com/risemedialibrary-xxx/videos%2Fwebm%2Fa_food_show.webm";
+
+      expect(commonSettings.getStorageUrlData(url)).to.deep.equal({
+        "folder": "videos/webm/",
+        "fileName": "a_food_show.webm"
+      });
+    });
+
+    it("should return an object with empty fileName value as only folder was selected", function () {
       // storage url, file was not within a folder(s)
-      var url = "https://www.googleapis.com/storage/v1/b/risemedialibrary-xxx/o?prefix=images%2F";
+      var url = "https://www.googleapis.com/storage/v1/b/risemedialibrary-xxx/o?prefix=images%2F",
+        nestedUrl = "https://www.googleapis.com/storage/v1/b/risemedialibrary-xxx/o?prefix=images%2Fpng%2F";
 
       expect(commonSettings.getStorageUrlData(url)).to.deep.equal({
         "folder": "images/",
         "fileName": ""
       });
+
+      // storage folder selected, and folder is nested
+      expect(commonSettings.getStorageUrlData(nestedUrl)).to.deep.equal({
+        "folder": "images/png/",
+        "fileName": ""
+      });
     });
+
   });
 
 });
