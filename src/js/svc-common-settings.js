@@ -12,9 +12,13 @@ angular.module("risevision.widget.common")
           str = decodeURIComponent(str.slice(str.indexOf("/") + 1));
           arr = str.split("/");
 
-          storage.folder = (typeof arr[arr.length - 2] !== "undefined" && arr[arr.length - 2] !== null) ?
-            arr[arr.length - 2] : "";
-          storage.fileName = arr[arr.length - 1];
+          storage.fileName = arr.pop();
+          storage.folder = arr.length > 0 ? arr.join("/") : "";
+
+          if (storage.folder !== "") {
+            // add ending "/" to the folder path
+            storage.folder += "/";
+          }
         }
         // Check if a folder was selected.
         else {
@@ -23,7 +27,7 @@ angular.module("risevision.widget.common")
           for (var i = 0; i < params.length; i++) {
             pair = params[i].split("=");
 
-            if (pair[0] === "prefix") {
+            if (pair[0] === "prefix" && typeof pair[1] !== "undefined" && pair[1] !== "") {
               storage.folder = decodeURIComponent(pair[1]);
               storage.fileName = "";
               break;
