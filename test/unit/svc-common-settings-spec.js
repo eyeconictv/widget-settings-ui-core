@@ -2,13 +2,12 @@
 "use strict";
 
 describe("Common Settings", function() {
-  var commonSettings, base;
+  var commonSettings;
 
   beforeEach(module("risevision.widget.common"));
 
-  beforeEach(inject(function (_commonSettings_, _STORAGE_URL_BASE_) {
+  beforeEach(inject(function (_commonSettings_) {
     commonSettings = _commonSettings_;
-    base = _STORAGE_URL_BASE_;
   }));
 
   describe("commonSettings", function () {
@@ -36,7 +35,8 @@ describe("Common Settings", function() {
 
       expect(commonSettings.getStorageUrlData(url)).to.deep.equal({
         "folder": "videos/",
-        "fileName": "a_food_show.webm"
+        "fileName": "a_food_show.webm",
+        "companyId": "xxx"
       });
     });
 
@@ -46,7 +46,8 @@ describe("Common Settings", function() {
 
       expect(commonSettings.getStorageUrlData(url)).to.deep.equal({
         "folder": "",
-        "fileName": "a_food_show.webm"
+        "fileName": "a_food_show.webm",
+        "companyId": "xxx"
       });
     });
 
@@ -56,7 +57,8 @@ describe("Common Settings", function() {
 
       expect(commonSettings.getStorageUrlData(url)).to.deep.equal({
         "folder": "videos/webm/",
-        "fileName": "a_food_show.webm"
+        "fileName": "a_food_show.webm",
+        "companyId": "xxx"
       });
     });
 
@@ -67,13 +69,15 @@ describe("Common Settings", function() {
 
       expect(commonSettings.getStorageUrlData(url)).to.deep.equal({
         "folder": "images/",
-        "fileName": ""
+        "fileName": "",
+        "companyId": "xxx"
       });
 
       // storage folder selected, and folder is nested
       expect(commonSettings.getStorageUrlData(nestedUrl)).to.deep.equal({
         "folder": "images/png/",
-        "fileName": ""
+        "fileName": "",
+        "companyId": "xxx"
       });
     });
 
