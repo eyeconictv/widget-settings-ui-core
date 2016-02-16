@@ -1,17 +1,17 @@
 window.result = {
     additionalParams: JSON.stringify(
       {
-        'textSetting':'hello world',
-        'checkboxSetting':true,
-        'textAreaSetting': 'the quick brown fox jumps over the lazy dog'
+        "textSetting":"hello world",
+        "checkboxSetting":true,
+        "textAreaSetting": "the quick brown fox jumps over the lazy dog"
       }
     ),
-    params: '?up_textSetting1=defg'
+    params: "?up_textSetting1=defg"
   };
 
 window.gadgets = {
   rpc: function (methodName, callback, params) {
-    if(methodName === 'rscmd_saveSettings') {
+    if(methodName === "rscmd_saveSettings") {
       window.result.params = params.params;
       window.result.additionalParams = params.additionalParams;
       if(callback) {
@@ -19,7 +19,7 @@ window.gadgets = {
       }
       else{ return params; }
     }
-    else if (methodName === 'rscms_closeSettings') {
+    else if (methodName === "rscms_closeSettings") {
       if(callback) {
         callback(true);
       }
@@ -27,11 +27,11 @@ window.gadgets = {
         return true;
       }
     }
-    else if (methodName === 'rscmd_getAdditionalParams'){
+    else if (methodName === "rscmd_getAdditionalParams"){
       if(callback) {
         callback(window.result.additionalParams);
       }
     }
-    else {throw 'Unknown method'; }
+    else {throw "Unknown method"; }
   }
 };
