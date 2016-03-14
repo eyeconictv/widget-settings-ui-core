@@ -134,6 +134,28 @@ describe("Settings UI", function() {
       });
     });
 
+    it("should copy missing additionalParams", function (done) {
+      module(function ($provide) {
+        $provide.value("defaultSettings", {
+          additionalParams: {
+            "dataSelection": {
+              "showDescription": "full",
+              "showTitle": true // should preserve this
+            }
+          }
+        });
+      });
+
+      inject(function (settingsGetter) {
+        settingsGetter.getAdditionalParams().should.eventually.deep.equal({
+          "dataSelection": {
+            "showDescription": "full",
+            "showTitle": true
+          }
+        }).notify(done);
+      });
+    });
+
   });
 
   describe("settingsParser", function () {
