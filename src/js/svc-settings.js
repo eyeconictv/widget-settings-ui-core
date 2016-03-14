@@ -69,7 +69,7 @@ angular.module("risevision.widget.common")
             result = {};
           }
           $log.debug("getAdditionalParams returns ", result);
-          deferred.resolve(angular.extend(defaultAdditionalParams, result));
+          deferred.resolve($.extend(defaultAdditionalParams, result));
         });
 
         return deferred.promise;

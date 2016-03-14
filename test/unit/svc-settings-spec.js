@@ -6,12 +6,16 @@ describe("Settings UI", function() {
 
   var settings = {
     params: {id: "abc", color: "blue", background: {color: "transparent"}},
-    additionalParams: {"font-picker-visible": true, "color": "blue"}
+    additionalParams: {
+      "dataSelection": {
+        "showDescription": "full"
+      }
+    }
   };
 
   var settingsStr = {
     params: "up_color=blue&up_background=%7B%22color%22%3A%22transparent%22%7D",
-    additionalParams: "{\"font-picker-visible\":true,\"color\":\"blue\"}"
+    additionalParams: "{\"dataSelection\":{\"showDescription\":\"full\"}}"
   };
 
   beforeEach(module(function ($provide) {
@@ -109,7 +113,12 @@ describe("Settings UI", function() {
         $provide.value("defaultSettings", {
           params: {id: "ddd", message: "yolo"}, //id should not be overridden
                                                 //windowSize should be ignored
-          additionalParams: { color: "red", greetings: "hello" } //color should not be overriden
+          additionalParams: {
+            "dataSelection": {  // dataSelection should not be overridden
+              "showDescription": "snippet"
+            },
+            greetings: "hello"
+          }
         });
       });
 
