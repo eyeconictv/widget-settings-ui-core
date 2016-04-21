@@ -24,7 +24,21 @@ describe("Google Font Loader", function() {
     $httpBackend = $injector.get("$httpBackend");
 
     $httpBackend.when("GET", "https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyBXxVK_IOV7LNQMuVVo_l7ZvN53ejN86zY&sort=alpha")
-      .respond({ items: [{ family: "ABeeZee" }, { family: "Buda" }, { family: "Slabo 27px" }] });
+      .respond({
+        items: [
+        {
+          family: "ABeeZee",
+          subsets: ["latin"]
+        },
+        {
+          family: "Buda",
+          subsets: ["latin", "latin-ext"]
+        },
+        {
+          family: "Slabo 27px",
+          subsets: ["khmer"]
+        }]
+      });
   }));
 
   beforeEach(inject(function(_googleFontLoader_) {
@@ -43,13 +57,19 @@ describe("Google Font Loader", function() {
       expect(googleFontLoader.getGoogleFonts).to.be.a("function");
     });
 
+    it("should not return fonts that have a subset of 'khmer'", function () {
+      googleFontLoader.getGoogleFonts();
+      $httpBackend.flush();
+
+      expect(googleFontLoader.getGoogleFonts().urls).to.have.lengthOf(1);
+    });
+
     it("should return an object containing font families and URLs", function () {
       var fonts =
         {
-          fonts: "ABeeZee=ABeeZee,sans-serif;Slabo 27px='Slabo 27px',sans-serif;",
+          fonts: "ABeeZee=ABeeZee,sans-serif;",
           urls: [
-            "//fonts.googleapis.com/css?family=ABeeZee",
-            "//fonts.googleapis.com/css?family=Slabo 27px"
+            "//fonts.googleapis.com/css?family=ABeeZee"
           ]
         };
 
