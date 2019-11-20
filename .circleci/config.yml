@@ -1,0 +1,60 @@
+version: 2
+
+jobs:
+  setup:
+    working_directory: ~/Rise-Vision/widget-settings-ui-core
+    docker: &DOCKERIMAGE
+      - image: jenkinsrise/cci-v2-transitional-widgets:0.0.4
+    steps:
+      - checkout
+      - restore_cache:
+          key: node-cache-{{ checksum "package.json" }}
+      - run: npm install
+      - run: bower install
+      - save_cache:
+          key: node-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - persist_to_workspace:
+          root: .
+          paths:
+            - components
+
+  test:
+    working_directory: ~/Rise-Vision/widget-settings-ui-core
+    docker: *DOCKERIMAGE
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - restore_cache:
+          key: node-cache-{{ checksum "package.json" }}
+      - run: NODE_ENV=prod npm run test
+
+  build:
+    working_directory: ~/Rise-Vision/widget-settings-ui-core
+    docker: *DOCKERIMAGE
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - restore_cache:
+          key: node-cache-{{ checksum "package.json" }}
+      - run: |
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            NODE_ENV=prod npm run build
+          else
+            NODE_ENV=test npm run build
+          fi
+
+workflows:
+  version: 2
+  workflow1:
+    jobs:
+      - setup
+      - test:
+          requires:
+            - setup
+      - build:
+          requires:
+            - test
