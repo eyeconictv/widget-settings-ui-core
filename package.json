@@ -13,7 +13,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/settinghead/widget-settings-ui-core.git"
+    "url": "https://github.com/porcupine-plan/widget-settings-ui-core.git"
   },
   "keywords": [
     "rise",
@@ -42,11 +42,11 @@
     "jshint-stylish": "^2.1.0",
     "phantomjs": "^1.9.16",
     "run-sequence": "^0.3.2",
-    "widget-tester": "git://github.com/Rise-Vision/widget-tester.git#1.5.0"
+    "widget-tester": "git://github.com/porcupine-plan/widget-tester.git#2.5.0"
   },
   "license": "GPLv3",
   "bugs": {
-    "url": "https://github.com/settinghead/widget-settings-ui-core/issues"
+    "url": "https://github.com/porcupine-plan/widget-settings-ui-core/issues"
   },
-  "homepage": "https://github.com/settinghead/widget-settings-ui-core"
+  "homepage": "https://github.com/porcupine-plan/widget-settings-ui-core"
 }
