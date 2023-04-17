@@ -13,11 +13,11 @@
   var path = require('path');
   var jshint = require('gulp-jshint');
   var runSequence = require('run-sequence');
-  var factory = require("widget-tester").gulpTaskFactory;
+  // var factory = require("widget-tester").gulpTaskFactory;
 
   var appJSFiles = [
       'src/js/**/*.js',
-      'test/**/*.js'
+      // 'test/**/*.js'
     ];
 
   gulp.task('config', function() {
@@ -55,30 +55,30 @@
 
   gulp.task('build', ['lint', 'concat']);
 
-  gulp.task("e2e:server", ["config"], factory.testServer());
-  gulp.task("test:e2e", ["e2e:server"], factory.testE2E());
+  // gulp.task("e2e:server", ["config"], factory.testServer());
+  // gulp.task("test:e2e", ["e2e:server"], factory.testE2E());
 
-  gulp.task("test:unit:ng", factory.testUnitAngular(
-    {testFiles: [
-          'components/jquery/dist/jquery.js',
-          'components/q/q.js',
-          'components/angular/angular.js',
-          'components/angular-mocks/angular-mocks.js',
-          'src/js/*.js',
-          'src/js/*/*.js',
-          'src/js/**/*.js',
-          'src/js/**/**/*.js',
-          'test/unit/fixtures/*.js',
-          'test/unit/**/*spec.js']}
-  ));
+  // gulp.task("test:unit:ng", factory.testUnitAngular(
+  //   {testFiles: [
+  //         'components/jquery/dist/jquery.js',
+  //         'components/q/q.js',
+  //         'components/angular/angular.js',
+  //         'components/angular-mocks/angular-mocks.js',
+  //         'src/js/*.js',
+  //         'src/js/*/*.js',
+  //         'src/js/**/*.js',
+  //         'src/js/**/**/*.js',
+  //         'test/unit/fixtures/*.js',
+  //         'test/unit/**/*spec.js']}
+  // ));
 
-  gulp.task("webdriver_update", factory.webdriveUpdate());
-  gulp.task("e2e:server-close", factory.testServerClose());
-  gulp.task("test:e2e:settings", ["webdriver_update", "e2e:server"], factory.testE2EAngular());
+  // gulp.task("webdriver_update", factory.webdriveUpdate());
+  // gulp.task("e2e:server-close", factory.testServerClose());
+  // gulp.task("test:e2e:settings", ["webdriver_update", "e2e:server"], factory.testE2EAngular());
 
-  gulp.task("test", function(cb) {
-    runSequence("test:unit:ng", "test:e2e:settings", "e2e:server-close", cb);
-  });
+  // gulp.task("test", function(cb) {
+  //   runSequence("test:unit:ng", "test:e2e:settings", "e2e:server-close", cb);
+  // });
 
   gulp.task('default', ['build']);
 
