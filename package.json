@@ -13,7 +13,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/porcupine-plan/widget-settings-ui-core.git"
+    "url": "https://github.com/eyeconictv/widget-settings-ui-core.git"
   },
   "keywords": [
     "rise",
@@ -41,12 +41,11 @@
     "gulp-watch": "^0.6.8",
     "jshint-stylish": "^2.1.0",
     "phantomjs": "^1.9.16",
-    "run-sequence": "^0.3.2",
-    "widget-tester": "git://github.com/porcupine-plan/widget-tester.git#2.5.0"
+    "run-sequence": "^0.3.2"
   },
   "license": "GPLv3",
   "bugs": {
-    "url": "https://github.com/porcupine-plan/widget-settings-ui-core/issues"
+    "url": "https://github.com/eyeconictv/widget-settings-ui-core/issues"
   },
-  "homepage": "https://github.com/porcupine-plan/widget-settings-ui-core"
+  "homepage": "https://github.com/eyeconictv/widget-settings-ui-core"
 }
