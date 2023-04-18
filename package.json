@@ -13,7 +13,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/settinghead/widget-settings-ui-core.git"
+    "url": "https://github.com/eyeconictv/widget-settings-ui-core.git"
   },
   "keywords": [
     "rise",
@@ -52,12 +52,11 @@
     "mocha": "~1.20.1",
     "phantomjs": "~1.9.7",
     "phantomjs": "^1.9.7",
-    "protractor": "~1.0.0",
-    "widget-tester": "git://github.com/Rise-Vision/widget-tester.git"
+    "protractor": "~1.0.0"
   },
   "license": "GPLv3",
   "bugs": {
-    "url": "https://github.com/settinghead/widget-settings-ui-core/issues"
+    "url": "https://github.com/eyeconictv/widget-settings-ui-core/issues"
   },
-  "homepage": "https://github.com/settinghead/widget-settings-ui-core"
+  "homepage": "https://github.com/eyeconictv/widget-settings-ui-core"
 }

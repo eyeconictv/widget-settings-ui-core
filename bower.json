@@ -1,13 +1,13 @@
 {
   "name": "widget-settings-ui-core",
   "version": "0.1.7",
-  "homepage": "https://github.com/Rise-Vision/widget-settings-ui-core",
+  "homepage": "https://github.com/eyeconictv/widget-settings-ui-core",
   "authors": [
     "Xiyang Chen <settinghead@gmail.com>"
   ],
   "description": "Common components shared across Rise Vision widget settings UI",
   "keywords": [
-    "rise-vision",
+    "eyeconictv",
     "settings",
     "widget",
     "ui"
